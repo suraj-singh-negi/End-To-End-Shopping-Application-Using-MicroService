@@ -1,0 +1,19 @@
+package com.product.service;
+
+import org.springframework.stereotype.Service;
+
+import com.product.dto.ProductRequest;
+import com.product.model.Product;
+
+@Service
+public class ProductService {
+
+	public Product createProduct(ProductRequest productRequest) {
+		Product product = Product.builder()
+							.name(productRequest.getName())
+							.description(productRequest.getDescription())
+							.price(productRequest.getPrice())
+							.build();
+	}
+	
+}

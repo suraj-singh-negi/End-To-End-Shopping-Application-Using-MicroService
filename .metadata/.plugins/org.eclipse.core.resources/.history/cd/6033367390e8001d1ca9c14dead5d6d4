@@ -1,0 +1,5 @@
+package com.notificationservice.event;
+
+public class OrderPlcedEvent {
+
+}

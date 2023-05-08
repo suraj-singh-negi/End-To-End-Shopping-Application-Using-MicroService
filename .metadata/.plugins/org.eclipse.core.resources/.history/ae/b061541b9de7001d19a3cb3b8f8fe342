@@ -1,0 +1,26 @@
+package com.order.service;
+
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
+import com.order.dto.OrderRequest;
+import com.order.model.Order;
+
+@Service
+public class OrderService {
+
+	public void placeOrder(OrderRequest orderRequest) {
+		Order order = new Order();
+		order.setOrderNumber(UUID.randomUUID().toString());
+		orderRequest.getOrderLineItemsDto()
+			.stream().map(
+				this::mapToDto
+					);
+	}
+
+	private <R> R mapToDto(OrderLineItemsDto orderlineitemsdto1) {
+		return null;
+	}
+	
+}

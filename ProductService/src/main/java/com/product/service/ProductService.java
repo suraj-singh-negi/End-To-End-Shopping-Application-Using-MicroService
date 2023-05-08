@@ -1,0 +1,47 @@
+package com.product.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.product.dto.ProductRequest;
+import com.product.dto.ProductResponse;
+import com.product.model.Product;
+import com.product.repository.ProductRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class ProductService {
+	
+	private ProductRepository productRepository;
+
+	public void createProduct(ProductRequest productRequest) {
+		Product product = Product.builder()
+							.name(productRequest.getName())
+							.description(productRequest.getDescription())
+							.price(productRequest.getPrice())
+							.build();
+		productRepository.save(product);
+	}
+
+	public List<ProductResponse> getAllProducts() {
+		List<Product> products = productRepository.findAll();
+		
+		return products.stream()
+			.map(this::mapToProductResponse).collect(Collectors.toList());
+		
+	}
+
+	private ProductResponse mapToProductResponse(Product product) {
+		return ProductResponse.builder()
+				.id(product.getId())
+				.name(product.getName())
+				.description(product.getDescription())
+				.price(product.getPrice())
+				.build();
+	}
+	
+}

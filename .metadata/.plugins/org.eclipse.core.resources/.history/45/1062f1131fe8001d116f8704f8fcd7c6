@@ -1,0 +1,17 @@
+package com.apigateway.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.web.reactive.config.EnableWebFlux;
+
+@Configuration
+@EnableWebFlux
+public class SecurityConfig {
+
+	public SpringSecurityFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
+		serverHttpSecurity.csrf()
+			.disable()
+			.authorizeExchange(exchange -> exchange.pathMatchers("/eureka"))
+	}
+	
+}

@@ -1,0 +1,64 @@
+package com.order.service;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import com.order.dto.OrderLineItemsDto;
+import com.order.dto.OrderRequest;
+import com.order.model.Order;
+import com.order.model.OrderLineItems;
+import com.order.respository.OrderRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class OrderService {
+	
+	private OrderRepository orderRepository;
+	
+	private WebClient webClient;
+
+	public void placeOrder(OrderRequest orderRequest) {
+		Order order = new Order();
+		
+		order.setOrderNumber(UUID.randomUUID().toString());
+		
+		List<OrderLineItems> orderLineItems = orderRequest.getOrderLineItemsDto()
+			.stream().map(
+				this::mapToDto
+					).collect(Collectors.toList());
+		
+		order.setOrderLineItems(orderLineItems);
+		
+		List<String> skuCodes = ((List<>) order.getOrderLineItems().stream().map(OrderLineItems::getSkuCode)).toList();
+		
+		Boolean result = webClient.get()
+					.uri("http://localhost:8082/api/inventory")
+					.retrieve()
+					.bodyToMono(Boolean.class)
+					.block();
+		if(result) {
+			orderRepository.save(order);
+		}else {
+			throw new IllegalArgumentException("Product is not in stock");
+		}
+		
+	}
+
+	private OrderLineItems mapToDto(OrderLineItemsDto orderlineitemsdto) {
+		OrderLineItems orderLineItems = new OrderLineItems();
+		orderLineItems.setId(orderlineitemsdto.getId());
+		orderLineItems.setPrice(orderlineitemsdto.getPrice());
+		orderLineItems.setQuantity(orderlineitemsdto.getQuantity());
+		orderLineItems.setSkuCode(orderlineitemsdto.getSkuCode());
+		return orderLineItems;
+	}
+	
+}

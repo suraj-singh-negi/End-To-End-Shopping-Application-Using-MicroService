@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.notificationservice.event.OrderPlcedEvent.java&apos; to &apos;OrderPlacedEvent.java&apos;&#x0D;&#x0A;- Original project: &apos;NotificationService&apos;&#x0D;&#x0A;- Original element: &apos;com.notificationservice.event.OrderPlcedEvent.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.notificationservice.event.OrderPlacedEvent.java&apos;" description="Rename compilation unit &apos;OrderPlcedEvent.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.notificationservice.event{OrderPlcedEvent.java" name="OrderPlacedEvent.java" references="false" stamp="1682994324296" version="1.0"/>
+</session>
