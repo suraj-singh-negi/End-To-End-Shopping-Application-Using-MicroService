@@ -6,7 +6,7 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
-
+//This is remote repo
 @Configuration
 @EnableWebFlux
 public class SecurityConfig {
@@ -25,3 +25,4 @@ public class SecurityConfig {
 	}
 	
 }
+//This is remote repo
